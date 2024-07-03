@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Attendance Record</title>
+</head>
+<body>
+    <h1>Attendance Record</h1>
+
+    {% if attendance %}
+        <table>
+            <tr>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Student Name</th>
+                <th>Course</th>
+            </tr>
+            {% for record in attendance %}
+            <tr>
+                <td>{{ record.date }}</td>
+                <td>{{ record.time }}</td>
+                <td>{{ record.student_first_name }} {{ record.student_last_name }}</td>
+                <td>{{ record.course_code }} - {{ record.course_name }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No attendance records found.</p>
+    {% endif %}
+</body>
+</html>

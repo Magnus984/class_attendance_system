@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CAS | login</title>
+  <link rel="stylesheet" href="../static/styles/login.css">
+
+</head>
+<body>
+  <!-- To display error message -->
+  <div class="image-container">
+   <img src="../static/IMAGES/classroom.jpg" 
+  alt="classroom image" class="image" > 
+  </div>
+
+  <div class="container">
+    {% if error %}
+    <p>{{ error }}</p>
+    {% endif %}
+    <div class="form-container">
+      <div class="profile">
+        <img src="../static/ICONS/icon1.png" alt="icon" class="profile-icon">
+        <div class="profile-desc"> Login</div>
+    </div>
+    <form method="POST">
+      <div class="inputs-container">
+        <div class="input-form">
+          <label for="user"> Username </label>
+          <input id="user" type="text" name="Username" class="fields">
+        </div>
+    
+      <div class="input-form">
+        <label for="pass"> Password </label>
+        <input id="pass" type="password" name="password" class="fields">
+        <div style="text-align: right; font-size: 18px; margin-top: -5px; padding-right: 10px;">
+        <a style="text-decoration: none; color: black;" href="{{ url_for('forgot_password') }}">forgot password?</a></div>
+      </div>
+    </div>
+    <button type="submit" class="btn">Login</button>
+  </form>
+  </div>
+</div>
+    
+
+</body>
+</html>

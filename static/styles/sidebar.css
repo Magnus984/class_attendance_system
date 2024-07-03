@@ -1,0 +1,147 @@
+
+.sidebar
+{
+  position: fixed;
+  top: 64px;
+  bottom: 0;
+  left: 0;
+  width: 248.5px;
+  border-width: 1.5px;
+  border-style: solid;
+  border-color: #B0A7A7;
+  border-bottom-style: none;
+  border-left-style: none;
+  border-top-width: 0.1px;
+  border-top-color: rgb(176, 174, 174);  
+}
+
+.checkattendance-sidebar
+{
+  position: fixed;
+  top: 64px;
+  bottom: 0;
+  left: 0;
+  width: 248.5px;
+  border-width: 1.5px;
+  border-style: solid;
+  border-color: #B0A7A7;
+  border-bottom-style: none;
+  border-left-style: none;
+  border-top-width: 0.1px;
+  border-top-color: rgb(176, 174, 174);
+  background-color: white;
+}
+
+.profile-page-sidebar
+{
+  position: fixed;
+  top: 64px;
+  bottom: 0;
+  left: 0;
+  width: 248.5px;
+  border-width: 1.5px;
+  border-style: solid;
+  border-color: #B0A7A7;
+  border-bottom-style: none;
+  border-left-style: none;
+  border-top-width: 0.1px;
+  border-top-color: rgb(176, 174, 174);
+  background-color: #F3F3F3;
+}
+
+.display-results-sidebar
+{
+  position: fixed;
+  top: 64px;
+  bottom: 0;
+  left: 0;
+  width: 248.5px;
+  border-width: 1.5px;
+  border-style: solid;
+  border-color: #B0A7A7;
+  border-bottom-style: none;
+  border-left-style: none;
+  border-top-width: 0.1px;
+  border-top-color: rgb(176, 174, 174);
+  background-color: #F3F3F3;
+  
+}
+
+.list a 
+{
+  display: flex;
+  flex-direction: row;
+  column-gap: 10px;
+  justify-content: left;
+  align-items: center;
+  text-decoration: none;
+  flex: 1;
+  padding-left: 20px;
+  padding-right: 4px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  color: black;
+  transition: 0.15s;
+}
+
+.anchor-text
+{
+  flex: 1;
+  padding: 8px;
+}
+
+.icons
+{
+  width: 22.12px;
+  height: 22.83px;
+}
+
+
+ul
+{
+  list-style: none;
+  padding-left: 0;
+  margin-top: 0;
+}
+
+li
+{
+  margin-bottom: 10px; 
+}
+
+.link.active
+{
+  background-color: #DA9100;
+}
+
+.link.non-active:hover
+{
+  background-color: rgba(249, 178, 46, 0.4);
+}
+
+.link.active .anchor-text
+{
+  border-right-width: 4px;
+  border-right-color: black;
+  border-right-style: solid; 
+}
+
+
+.nav-header
+{
+  margin-top: 20px;
+  margin-left: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.nav-content
+{
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+
+}

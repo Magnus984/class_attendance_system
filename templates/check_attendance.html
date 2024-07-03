@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../static/styles/header.css">
+  <link rel="stylesheet" href="../static/styles/sidebar.css">
+  <link rel="stylesheet" href="../static/styles/general.css">
+  <link rel="stylesheet" href="../static/styles/checkattendance-main-content.css">
+  <title>CAS | check-attendance</title>
+</head>
+<body class="checkattendance-body">
+  <!-- To display error message
+  {% if error %}
+  <p>{{ error }}</p>
+  {% endif %}
+-->
+  <header class="header">
+    <div class="left-side"> LECTURER PORTAL</div>
+    <div class="right-side"> 
+      <div class="profile-container">
+        <img src="../static/ICONS/profile1.png" alt="profile icon">
+        <div style="color: white;"> Daniel Otchere </div>
+      </div>
+    </div>
+  </header>
+  
+  <nav class="checkattendance-sidebar">
+    <div class="nav-header">
+      <hr>
+      NAVIGATION
+      <hr>
+    </div>
+    <ul class="unordered-list">
+      <li class="list">
+        <a class="link non-active" href="dashboard.html">
+          <img class="icons" src="../static/ICONS/dashboard.png" alt="dashboard-icon">
+           <div class="anchor-text">DASHBOARD</div>
+        </a>
+      </li>
+  
+      <li class="list">
+        <a class="link active" href="CheckAttendance.html"> 
+          <img class="icons" src="../static/ICONS/check attendance.png" alt="check-attendance-icon"> 
+           <div class="anchor-text">CHECK ATTENDANCE</div>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  
+    <main class="content-container">
+     <div class="container">
+      <div class="left-content">
+        <img class="attendance-img" src="../static/IMAGES/attendance-bg.jpg" 
+         alt="attendance-bg"> 
+      </div>
+
+      <div class="right-content">
+        <div class="title">
+          CHECK ATTENDANCE
+        </div>
+        <form method="post" action="display-results.html">
+          <div class="input-nest">
+            <div class="input-container">
+              <label for="input1">Date</label>
+              <input placeholder="2024-25-05" type="text" name="date" id="input1">          
+            </div>
+            <div class="input-container">
+              <label for="input2">Start Time</label>
+              <input placeholder="17:05:03" type="text" name="start-time" id="input2">
+            </div>
+            <div class="input-container"> 
+              <label for="input3">End Time</label>
+              <input placeholder="18:00:00" type="text" name="end-time" id="input3">
+            </div>
+            <div class="input-container">
+              <label for="input4"> Course Code </label>
+              <input placeholder="eg. COE 457" type="text" name="course code" id="input4">
+            </div>
+            <div class="input-container">
+              <label for="input5"> Student Id (optional) </label>
+              <input placeholder="eg. 3037280" type="text" name="studentID" id="input5">
+            </div>
+          </div>
+          <button class="attendance-btn"> Display Attendance </button>
+        </form>
+      </div>
+    </div> 
+  </main>
+  
+</body>
+</html>

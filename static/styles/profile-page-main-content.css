@@ -1,0 +1,187 @@
+
+.profile-content
+{
+  display: flex;
+  flex-direction: column;
+  row-gap: 40px;
+  
+  width: 100%;
+}
+
+.profile-layer1
+{
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+  background-color: #FFFFFF;
+  padding-bottom: 25px;
+  border-radius: 2px;
+  row-gap: 10px;
+}
+
+.title-profile
+{
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.profile-layer1-title
+{
+  text-align: center;
+}
+
+.profile-layer1-icon
+{
+  text-align: center;
+}
+
+.profile-layer1-icon img
+{
+  width: 180px;
+}
+
+.profile-layer1-details
+{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 2px;
+  font-weight: 700;
+
+}
+
+.profile-layer2
+{
+  display: flex;
+  flex-direction: column;
+  background-color: #FFFFFF;
+  padding-top: 7px;
+  padding-bottom: 30px;
+  border-radius: 2px;
+}
+
+.form-content
+{
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-layer2-title
+{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-layer2-icon
+{
+  width: 45px;
+}
+
+
+.profile-layer2-desc
+{
+  text-align: center;
+  font-weight: 700;
+}
+
+.profile-layer2-input-nest
+{
+  font-size: 15px;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+  padding-top: 20px;
+  padding-top: 20px;
+  padding-left: 50px;
+  padding-bottom: 20px;
+}
+
+
+.profile-layer2-input-container
+{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1px;
+}
+
+.profile-layer2-input-container input
+{
+  max-width: 85%;
+  height: 30px;
+  border-radius: 5px;
+  border-width: 1px;
+  text-indent: 6px;
+  font-size: 15px;
+}
+
+
+.disabled-input
+{
+  background-color: rgb(237, 233, 233);
+}
+
+
+.profile-layer2-input-container input::placeholder
+{
+  font-size: 14px;
+}
+
+.btn-container
+{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  column-gap: 8px;
+ 
+}
+
+
+.update-btn
+{
+  border-style: none;
+  border-radius: 1px;
+  background-color: #DA9100;
+  color: white;
+  padding: 7px 10px;
+  transition: opacity 0.05s;
+  cursor: pointer;
+}
+
+.update-btn:hover
+{
+  opacity: 0.9;
+}
+
+.update-btn:active
+{
+  opacity: 0.5;
+}
+
+.main-menu-btn
+{
+  text-decoration: none;
+  color: black;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  column-gap: 1px;
+  padding-right: 10px;
+  padding-left: 5px;
+  cursor: pointer;
+  border-width: 1px;
+  border-style: solid;
+}
+
+.main-menu-btn img
+{
+  width: 15px;
+}
+
+
+

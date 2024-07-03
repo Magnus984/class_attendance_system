@@ -1,0 +1,111 @@
+
+body
+{
+  display: flex;
+  flex direction: row;
+}
+
+.profile
+{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 24px;
+  font-weight: 700px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.image-container
+{
+  flex: 500px;
+  height: 100vh;
+  object-fit: contain;
+}
+
+.form-container
+{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 30px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.container
+{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 22px;
+  font-weight: 700;
+  height: 100vh;
+  flex: 1;
+}
+
+.image
+{
+  width:100%;
+  height: 100%;
+}
+
+.inputs-container
+{
+  width: 300px;
+  height: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-form
+{
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 5px;
+  
+}
+
+.fields
+{
+  width: 95%;
+  height: 35px; 
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 20px;
+  text-indent: 20px;
+  font-size: 18px;
+  box-shadow: inset 1px 2px 3px rgba(0, 0, 0, 0.15);
+}
+
+.btn
+{
+  font-size: 24px;
+  font-weight: 700;
+  width: 90%;
+  height: 40px;
+  border-radius: 20px;
+  background-color: orange;
+  border-style: none;
+  box-shadow: 5px 5px 10px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: opacity 0.5s;
+  margin-left: 20px;
+}
+
+.btn:hover
+{
+  opacity: 0.9;
+}
+
+.btn:active
+{
+  opacity: 0.6;
+}

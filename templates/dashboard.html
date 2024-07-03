@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CAS | dashboard</title>
+  <link rel="stylesheet" href="../static/styles/general.css">
+  <link rel="stylesheet" href="../static/styles/header.css">
+  <link rel="stylesheet" href="../static/styles/sidebar.css">
+  <link rel="stylesheet" href="../static/styles/dashboard-main-content.css">
+</head>
+
+<body class="dashboard-body">
+<header class="header">
+  <div class="left-side"> LECTURER PORTAL</div>
+  <div class="right-side"> 
+    <div class="profile-container">
+      <img src="../static/ICONS/profile1.png" alt="profile icon">
+      <div style="color: white;"> Daniel Otchere </div>
+    </div>
+  </div>
+</header>
+
+<nav class="sidebar">
+  <div class="nav-header">
+    <hr>
+      NAVIGATION
+    <hr>
+  </div>
+  <ul class="unordered-list">
+    <li class="list">
+      <a class="link active" href="dashboard.html">
+        <img class="icons" src="../static/ICONS/dashboard.png" alt="dashboard-icon">
+         <div class="anchor-text">DASHBOARD</div>
+      </a>
+    </li>
+
+    <li class="list">
+      <a class="link non-active" href="{{ url_for('check_attendance') }}"> 
+        <img class="icons" src="../static/ICONS/check attendance.png" alt="check-attendance-icon"> 
+         <div class="anchor-text">CHECK ATTENDANCE</div>
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<main class="main-container">
+  <section class="layer1">
+    <img class="big-image" src="../static/IMAGES/big.jpeg" alt="dashboard-background">  
+    <div class="surface-container">
+      <div class="surface-text">
+        <span style="color: red; font-size: 20px; font-weight: 500;">2024/2025 Admissions</span>
+        <br>
+        It is announced for the information of prospective applicants and the general
+        public that application e-vouchers to Postgraduates/Undergraduates
+        /Top-Up programmes of study at the university for the 2024/2025 Academic Year
+        are now on sale.
+      </div>
+      <button class="read-more-btn"> READ MORE </button>
+    </div>
+  </section>
+
+  <section class="layer2">
+    <a href="">
+      <img class="guide-icon-img" src="../static/ICONS/lecturer's guide.png" alt="Lecturer's guide">
+      <div class="icon-desc">
+        <span style="color: #DA9100;">Lecturer's guide</span>
+      </div>
+      <div class="desc">
+        document outstanding rules,standards and expectations
+        for lecturers behaviour
+      </div>
+    </a>
+  
+    <a href="{{ url_for('check_attendance') }}">
+      <img class="check-attendance-img" src="../static/ICONS/check attendance.png" alt="check-attendance-img">
+      <div class="icon-desc"> 
+        <span style="color: #DA9100;">Check Attendance</span>
+      </div>
+      <div class="desc"> 
+        Check attendance module displays attendance of
+        students present and absent for lectures to lecturers
+      </div>
+    </a>
+    
+    <a href="https://vclass.knust.edu.gh/">
+      <img class="virtual-classroom-img" src="../static/ICONS/virtual classroom.png" alt="virtual-classroom-icon">
+      <div class="icon-desc">
+        <span style="color: #DA9100;">Virtual Classroom</span>  
+      </div>
+      <div class="desc">
+        Online platform for live interactive 
+        teachings with video, audio, chat and screen sharing
+      </div>
+    </a>
+  </section> 
+</main>
+  
+<script src="../static/dashboard.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+
+
+.header
+{
+  display: flex;
+  flex-direction: row;
+  top: 4px;
+  left: 0;
+  right: 0;
+  height: 60px;
+  position: fixed;
+  z-index: 100;
+
+}
+
+.left-side
+{ 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #DA9100;
+  width: 250px;
+}
+
+.right-side
+{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: right;
+  background: url(../IMAGES/header.jpg) repeat center center/cover;
+  flex: 1;
+  padding-right: 40px;
+}
+
+.profile-container
+{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}

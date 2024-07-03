@@ -1,0 +1,45 @@
+.dashboard-body
+{
+  margin-top: 3px;
+  margin-left: 3px;
+  margin-right: 0;
+  padding-left: 260px;
+  padding-top: 80px;
+  padding-right: 5px;
+}
+
+.checkattendance-body
+{
+  background-color: #EBEAEA;
+  margin-top: 2px;
+  margin-left: 3px;
+  margin-right: 0;
+  padding-left: 320px;
+  padding-top: 110px;
+  padding-right: 60px;
+}
+
+.profile-page-body
+{
+  margin-top: 3px;
+  margin-left: 3px;
+  margin-right: 0;
+  padding-left: 285px;
+  padding-top: 80px;
+  padding-bottom: 20px;
+  padding-right: 30px;
+  background-color: #DAD9D9;
+}
+
+.display-results-body
+{
+  margin-top: 3px;
+  margin-left: 3px;
+  margin-right: 0;
+  padding-left: 285px;
+  padding-top: 100px;
+  padding-bottom: 20px;
+  padding-right: 120px;
+  background-color: #DAD9D9;
+}
+
