@@ -2,6 +2,7 @@
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, ForeignKey, Float, Table, create_engine, Date, Time
 from sqlalchemy.orm import relationship
+from flask_login import UserMixin
 
 
 engine =create_engine("mysql+mysqldb://root:windowsql@localhost:3306/class_attendance_system_v2")
@@ -43,7 +44,7 @@ class Student(Base):
     )
 
 
-class Lecturer(Base):
+class Lecturer(Base, UserMixin):
     __tablename__ = 'lecturers'
 
     id = Column(Integer, primary_key=True)
