@@ -7,20 +7,16 @@
   <link rel="stylesheet" href="../static/styles/sidebar.css">
   <link rel="stylesheet" href="../static/styles/general.css">
   <link rel="stylesheet" href="../static/styles/checkattendance-main-content.css">
+  <link rel="stylesheet" href="../static/styles/messages.css">
   <title>CAS | check-attendance</title>
 </head>
 <body class="checkattendance-body">
-  <!-- To display error message
-  {% if error %}
-  <p>{{ error }}</p>
-  {% endif %}
--->
   <header class="header">
     <div class="left-side"> LECTURER PORTAL</div>
     <div class="right-side"> 
       <div class="profile-container">
         <img src="../static/ICONS/profile1.png" alt="profile icon">
-        <div style="color: white;"> Daniel Otchere </div>
+        <div style="color: white;"> {{ first_name }} {{ last_name }} </div>
       </div>
     </div>
   </header>
@@ -33,7 +29,7 @@
     </div>
     <ul class="unordered-list">
       <li class="list">
-        <a class="link non-active" href="dashboard.html">
+        <a class="link non-active" href="{{ url_for('dashboard') }}">
           <img class="icons" src="../static/ICONS/dashboard.png" alt="dashboard-icon">
            <div class="anchor-text">DASHBOARD</div>
         </a>
@@ -57,14 +53,23 @@
       </div>
 
       <div class="right-content">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <ul class="flashes">
+            {% for category, message in messages %}
+              <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+        {% endwith %}
         <div class="title">
           CHECK ATTENDANCE
         </div>
-        <form method="post" action="display-results.html">
+        <form method="POST">
           <div class="input-nest">
             <div class="input-container">
               <label for="input1">Date</label>
-              <input placeholder="2024-25-05" type="text" name="date" id="input1">          
+              <input placeholder="2024-05-25" type="text" name="date" id="input1">          
             </div>
             <div class="input-container">
               <label for="input2">Start Time</label>
@@ -76,14 +81,14 @@
             </div>
             <div class="input-container">
               <label for="input4"> Course Code </label>
-              <input placeholder="eg. COE 457" type="text" name="course code" id="input4">
+              <input placeholder="eg. COE 457" type="text" name="course-code" id="input4">
             </div>
             <div class="input-container">
               <label for="input5"> Student Id (optional) </label>
               <input placeholder="eg. 3037280" type="text" name="studentID" id="input5">
             </div>
           </div>
-          <button class="attendance-btn"> Display Attendance </button>
+          <button type="submit"class="attendance-btn"> Display Attendance </button>
         </form>
       </div>
     </div> 
