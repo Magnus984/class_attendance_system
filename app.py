@@ -1,18 +1,32 @@
 """Module for backend routes and logic"""
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_login import LoginManager, current_user, login_user, login_required
+from flask_mail import Mail, Message 
 from werkzeug.security import generate_password_hash, check_password_hash
-from sqlalchemy import create_engine, and_, select
+from sqlalchemy import create_engine, and_, select, update
 from sqlalchemy.orm import sessionmaker
 from utility.db_models import Lecturer, Attendance, Course, lecturer_courses, registered_courses, Student
+import re
+import secrets
+import logging
+import smtplib
+import time
 
 
 app = Flask(__name__)
 app.secret_key = 'my_key'
+
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'tettehmagnus35@gmail.com'
+app.config['MAIL_PASSWORD'] = 'vciruxqqbhwtibge'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+mail = Mail(app) 
+
 engine = create_engine("mysql+mysqldb://root:windowsql@localhost:3306/class_attendance_system_v2")
 Session = sessionmaker(bind=engine)
 session = Session()
-
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -20,17 +34,25 @@ login_manager.init_app(app)
 @login_manager.user_loader
 def load_user(user_id):
     return session.query(Lecturer).get(user_id)
-"""
-def valid_login(email, password):
-    Check the email and password against 
-    email and password fields in user model
-    lecturer = session.query(Lecturer).filter(Lecturer.email == email).first()
-    if lecturer and check_password_hash(lecturer.password, password):
-        print("login valid")
+
+def valid_email(email):
+    email_regex = r'^[\w\.-]+@[\w\.-]+\.\w+$'
+    if re.match(email_regex, email):
         return True
     else:
         return False
-"""
+
+def valid_phone(number):
+    if len(number) == 10:
+        return True
+    else:
+        return False
+
+
+def generate_token():
+    return secrets.token_urlsafe(16)
+
+logging.basicConfig(level=logging.DEBUG)
 
 @app.route('/', methods=['GET', 'POST'], strict_slashes=False)
 def login():
@@ -38,8 +60,6 @@ def login():
     if request.method == 'POST':
         email = request.form['Username']
         password = request.form['password']
-        print('email= ', email)
-        print('password= ', password)
         if not email and not password:
             flash('Please enter email and password.', 'warning')
             return redirect(url_for('login'))
@@ -49,7 +69,7 @@ def login():
             flash('login successfull', 'success')
             return redirect(url_for('dashboard'))
         else:
-            flash('Invalid email/password', 'success')
+            flash('Invalid email/password', 'error')
     return render_template('login.html')
 
 
@@ -57,22 +77,72 @@ def login():
 def forgot_password():
     if request.method == 'POST':
         form_email = request.form['change-password']
-        email_list = session.query(Lecturer.email).all()
-        for i in range(len(email_list)):
-            if email_list[i][0] == form_email:
-                """
-                I'll do this instead, an email will be sent instead
-                of the redirection.
-                """
-                return redirect(url_for('change_password'))
-        else:    
+        if not valid_email(form_email):
             flash('Invalid email', 'error')
+            return redirect(url_for('forgot_password'))
+        lecturer = session.query(Lecturer).filter_by(email=form_email).first()
+        if not lecturer:
+            flash('Make sure email has been registered', 'info')
+            return redirect(url_for('forgot_password'))
+        print(form_email)
+        token = generate_token()
+        uid = lecturer.id
+        reset_url = "{}://{}/change-password/{}/{}/".format(
+            request.scheme, request.host, uid, token
+        )
+        msg = Message(
+            'Password Reset Request',
+            sender = 'CAS admin tettehmagnus35@gmail.com',
+            recipients = [form_email]
+        )
+        msg.body = f"""
+        We received a request to reset the password for your account.
+        You can reset your password by clicking on the link below:
+        
+        {reset_url}
+
+        If you did not request a password reset, please ignore this email.
+        """
+        try:
+            start_time = time.time()
+            mail.send(msg)
+            end_time = time.time()
+            logging.debug(f"Email sent to {form_email} in {end_time - start_time:.2f} seconds")
+            flash('An email has been sent with instructions to reset your password.', 'success')
+        except smtplib.SMTPException as e:
+            logging.error(f"Error sending email: {e}")
+            flash('There was an error sending the email. Please try again later.', 'error')
+        #mail.send(msg)
+        #flash('An email has been sent with instructions to reset your password.', 'success')
+        return redirect(url_for('login'))
     return render_template('forgot_password.html')
 
 
-@app.route('/change-password', methods=['GET', 'POST'], strict_slashes=False)
-def change_password():
+@app.route('/change-password/<int:uid>/<token>/', methods=['GET', 'POST'], strict_slashes=False)
+def change_password(uid, token):
+    if request.method == 'POST':
+        new_password = request.form['NewPassword']
+        confirm_password = request.form['ConfirmPassword']
+        
+        if new_password != confirm_password:
+            flash('Passwords do not match', 'error')
+            return redirect(url_for('change_password'))
+        if len(new_password) < 8:
+            flash('Passwords should be more than or equal to 8 characters', 'error')
+            return redirect(url_for('change_password', uid=uid, token=token))
 
+        lecturer = session.query(Lecturer).filter_by(id=uid).first()
+        if check_password_hash(lecturer.password, new_password):
+            flash('Password should not be similar to old one', 'error')
+            return redirect(url_for('change_password', uid=uid, token=token))
+        if lecturer:
+            lecturer.password = generate_password_hash(new_password)
+            session.commit()
+            flash('Your password has been updated!', 'success')
+            return redirect(url_for('login'))
+        else:
+            flash('Invalid user', 'error')
+            return redirect(url_for('forgot_password'))
     return render_template('change_password.html')
 
 
@@ -82,8 +152,6 @@ def dashboard():
     lecturer = current_user
     #get the name of the lecturer to display
     first_name, last_name = lecturer.first_name, lecturer.last_name
-    print("first_name: ", first_name)
-    print("last_name: ", last_name)
     context = {
         'first_name': first_name,
         'last_name': last_name 
@@ -106,13 +174,11 @@ def check_attendance():
 
         if not course:
             flash('Invalid course code', 'error')
-            print("Invalid course code")
             return redirect(url_for('check_attendance'))
         if not session.query(lecturer_courses).filter_by(
             lecturer_id=lecturer.id, course_id=course.id
             ).first():
             flash('You are not assigned to this course', 'error')
-            print("You are not assigned to this course")
             return redirect(url_for('check_attendance'))
 
         try:
@@ -163,9 +229,42 @@ def check_attendance():
         last_name=last_name
         )
 
+
 @app.route('/profile', methods=['GET', 'POST'], strict_slashes=False)
 def profile():
-    return render_template('profile_page.html')
+    lecturer = current_user
+    first_name, last_name, lecturer_id, lecturer_email, lecturer_address, lecturer_phone = lecturer.first_name, lecturer.last_name, lecturer.id, lecturer.email, lecturer.address, lecturer.phone
+    if request.method == 'POST':
+        email = request.form['Email']
+        address = request.form['Address']
+        number = request.form['Phone']
+        if not valid_email(email):
+            flash('Invalid email', 'warning')
+            return redirect(url_for('profile'))
+        if not valid_phone(number):
+            flash('Invalid phone number', 'warning')
+            return redirect(url_for('profile'))
+        #if email and address and number:
+        lecturer = session.query(Lecturer).filter(Lecturer.id == lecturer_id).first()
+        if lecturer:
+            lecturer.email = email
+            lecturer.address = address
+            lecturer.phone = number
+            session.commit()
+            flash('Update successful', 'success')
+            return redirect(url_for('profile'))
+        else:
+            flash('Update unsuccessfull', 'error')
+            return redirect(url_for('profile'))
+    return render_template(
+        'profile_page.html',
+        first_name=first_name,
+        last_name=last_name,
+        lecturer_id=lecturer_id,
+        lecturer_email=lecturer_email, 
+        lecturer_address=lecturer_address,
+        lecturer_phone=lecturer_phone
+        )
 
 @app.route('/print-attendance', methods=['GET', 'POST'], strict_slashes=False)
 def print_attendance():

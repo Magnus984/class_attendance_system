@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="../static/styles/general.css">
   <link rel="stylesheet" href="../static/styles/header.css">
   <link rel="stylesheet" href="../static/styles/sidebar.css">
+  <link rel="stylesheet" href="../static/styles/messages.css">
   <link rel="stylesheet" href="../static/styles/profile-page-main-content.css">
 </head>
 
@@ -16,7 +17,7 @@
   <div class="right-side"> 
     <div class="profile-container">
       <img src="../static/ICONS/profile1.png" alt="profile icon">
-      <div style="color: white;"> Daniel Otchere </div>
+      <div style="color: white;"> {{ first_name }} {{ last_name }} </div>
     </div>
   </div>
 </header>
@@ -29,14 +30,14 @@
   </div>
   <ul class="unordered-list">
     <li class="list">
-      <a class="link non-active" href="dashboard.html">
+      <a class="link non-active" href="{{ url_for('dashboard')}}">
         <img class="icons" src="../static/ICONS/dashboard.png" alt="dashboard-icon">
          <div class="anchor-text">DASHBOARD</div>
       </a>
     </li>
 
     <li class="list">
-      <a class="link non-active" href="CheckAttendance.html"> 
+      <a class="link non-active" href="{{ url_for('check_attendance')}}"> 
         <img class="icons" src="../static/ICONS/check attendance.png" alt="check-attendance-icon"> 
          <div class="anchor-text">CHECK ATTENDANCE</div>
       </a>
@@ -54,12 +55,21 @@
         <img src="../static/ICONS/profile3.png" alt="profile-icon">
       </div>
       <div class="profile-layer1-details" >
-        <div class="name-detail"> Daniel Otchere </div>
-        <div class="lecturer-id"> 2011205 </div>
+        <div class="name-detail"> {{ first_name }} {{ last_name }} </div>
+        <div class="lecturer-id"> {{ lecturer_id }} </div>
       </div>
     </div>
 
     <div class="profile-layer2">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <ul class="flashes">
+            {% for category, message in messages %}
+              <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+        {% endwith %}
       <div class="profile-layer2-title"> 
         <img class="profile-layer2-icon" src="../static/ICONS/profile5.png" alt="profile-icon2">
         <div class="profile-layer2-desc">
@@ -67,31 +77,31 @@
         </div>
       </div>
   
-      <form method="PUT" action="dashboard.html">
+      <form method="post">
         <div class="profile-layer2-input-nest">
           <div class=" profile-layer2-input-container">
             <label for="profile-input1">Lastname</label>
-            <input class="disabled-input" disabled value="Otchere" type="text" name="Lastname" id="profile-input1">          
+            <input class="disabled-input" disabled value="{{ last_name }}" type="text" name="Lastname" id="profile-input1">          
           </div>
           <div class="profile-layer2-input-container">
             <label for="profile-input2">Firstname</label>
-            <input  class="disabled-input" disabled value="Daniel" type="text" name="Firstname" id="profile-input2">
+            <input  class="disabled-input" disabled value="{{ first_name }}" type="text" name="Firstname" id="profile-input2">
           </div>
           <div class="profile-layer2-input-container"> 
             <label for="profile-input3">Email</label>
-            <input type="text" name="Email" value="danielotchere@gmail.com" id="profile-input3">
+            <input type="text" name="Email" value="{{ lecturer_email }}" id="profile-input3">
           </div>
           <div class="profile-layer2-input-container">
             <label for="profile-input4"> Address </label>
-            <input type="text" name="Address" value="P.O BOX NT 86" id="profile-input4">
+            <input type="text" name="Address" value="{{ lecturer_address }}" id="profile-input4">
           </div>
           <div class="profile-layer2-input-container">
             <label for="profile-input5"> Phone number </label>
-            <input type="text" name="Phone" value="050 660 9243" id="profile-input5">
+            <input type="text" name="Phone" value="0{{ lecturer_phone }}" id="profile-input5">
           </div>
         </div>
         <div class="btn-container">
-          <a href="dashboard.html" class="main-menu-btn">
+          <a href="{{ url_for('dashboard')}}" class="main-menu-btn">
             <img src="../static/ICONS/left-arrow.png" alt="arrow">
             Back to main menu
           </a>
