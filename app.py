@@ -11,20 +11,23 @@ import secrets
 import logging
 import smtplib
 import time
+from dotenv import load_dotenv
+import os
 
 
+load_dotenv()
 app = Flask(__name__)
-app.secret_key = 'my_key'
+app.secret_key = os.environ.get('SECRET_KEY')
 
 app.config['MAIL_SERVER']='smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = 'tettehmagnus35@gmail.com'
-app.config['MAIL_PASSWORD'] = 'vciruxqqbhwtibge'
+app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 mail = Mail(app) 
 
-engine = create_engine("mysql+mysqldb://root:windowsql@localhost:3306/class_attendance_system_v2")
+engine = create_engine(os.environ.get('DATABASE_URL'))
 Session = sessionmaker(bind=engine)
 session = Session()
 
@@ -189,6 +192,7 @@ def check_attendance():
             flash('Invalid student ID', 'error')
             return redirect(url_for('check_attendance'))
 
+        """
         attendance = session.query(Attendance, Student, Course)\
         .join(Attendance.student)\
         .join(registered_courses, registered_courses.c.student_id == Attendance.student_id)\
@@ -200,6 +204,7 @@ def check_attendance():
             ),
             Course.course_code == course_code
         )
+        """
     
         if student_id:
             attendance = session.query(Attendance, Student, Course)\
