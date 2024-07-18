@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+
 from utility.EncodeGenerator import EncodeGen
 
 print("Encoding Begins...")
