@@ -3,9 +3,9 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_login import LoginManager, current_user, login_user, login_required
 from flask_mail import Mail, Message 
 from werkzeug.security import generate_password_hash, check_password_hash
-from sqlalchemy import create_engine, and_, select, update
+from sqlalchemy import create_engine, and_, select, update, func
 from sqlalchemy.orm import sessionmaker
-from utility.db_models import Lecturer, Attendance, Course, lecturer_courses, registered_courses, Student
+from models import Lecturer, Attendance, Course, lecturer_courses, registered_courses, Student
 import re
 import secrets
 import logging
@@ -126,7 +126,7 @@ def change_password(uid, token):
         
         if new_password != confirm_password:
             flash('Passwords do not match', 'error')
-            return redirect(url_for('change_password'))
+            return redirect(url_for('change_password', uid=uid, token=token))
         if len(new_password) < 8:
             flash('Passwords should be more than or equal to 8 characters', 'error')
             return redirect(url_for('change_password', uid=uid, token=token))
@@ -202,6 +202,18 @@ def check_attendance():
         )
     
         if student_id:
+            attendance = session.query(Attendance, Student, Course)\
+            .join(Attendance.student)\
+            .join(registered_courses, registered_courses.c.student_id == Attendance.student_id)\
+            .join(Course, registered_courses.c.course_id == Course.id)\
+            .filter(
+                Attendance.date == date, and_(
+                    Attendance.time >= start_time,
+                    Attendance.time <= end_time
+                ),
+                Course.course_code == course_code
+            )
+
             reg_courses = session.execute(
                 select(registered_courses.c.course_id).where(registered_courses.c.student_id == student_id)
             )
@@ -211,6 +223,29 @@ def check_attendance():
                 return redirect(url_for('check_attendance'))
             attendance = attendance.filter(Attendance.student_id == student_id)
         else:
+            # Subquery to find the minimum time for each student's attendance
+            min_time_subquery = session.query(
+                Attendance.student_id,
+                func.min(Attendance.time).label('min_time')
+            ).filter(
+                Attendance.date == date,
+                Attendance.time >= start_time,
+                Attendance.time <= end_time
+            ).group_by(Attendance.student_id).subquery()
+
+            # Main query to get the attendance records with the minimum time
+            attendance = session.query(Attendance, Student, Course)\
+                .join(Attendance.student)\
+                .join(registered_courses, registered_courses.c.student_id == Attendance.student_id)\
+                .join(Course, registered_courses.c.course_id == Course.id)\
+                .join(min_time_subquery, and_(
+                    Attendance.student_id == min_time_subquery.c.student_id,
+                    Attendance.time == min_time_subquery.c.min_time
+                ))\
+                .filter(
+                    Attendance.date == date,
+                    Course.course_code == course_code
+                )
             attendance = attendance.all()
         
         if not attendance:
