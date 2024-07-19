@@ -8,8 +8,11 @@ import pickle
 import MySQLdb
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from encode_package.db_models import Student
+from models import Student
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
 
 
 class EncodeGen(): 
@@ -17,7 +20,7 @@ class EncodeGen():
     getting encodings and saving them in a pickle file"""
 
 
-    engine = create_engine("mysql+mysqldb://root:windowsql@localhost:3306/class_attendance_system_v2")
+    engine = create_engine(os.environ.get('DATABASE_URL'))
     Session = sessionmaker(bind=engine)
     session = Session()
 
@@ -30,25 +33,6 @@ class EncodeGen():
         print(f"current_dir: {current_dir}")
         #Get paths from the database
         #Retrieve url from database
-        """
-        db = MySQLdb.connect(
-            host="localhost",
-            port=3306, user='root',
-            passwd='windowsql',
-            db='class_attendance_system'
-        )
-        cur = db.cursor()
-        cur.execute("SELECT id, image_url FROM student")
-        rows = cur.fetchall()
-        print(rows)
-        cur.close()
-        db.close()
-        
-        
-        for row in rows:
-            self.__img_list.append(cv2.imread(os.path.join(current_dir, row[1])))
-            self.__ids.append(row[0])
-        """
         for id, image_url in self.session.query(Student.id, Student.image_url):
             self.__img_list.append(cv2.imread(os.path.join(current_dir, image_url)))
             self.__ids.append(id)
