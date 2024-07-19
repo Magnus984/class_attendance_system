@@ -25,16 +25,6 @@ capture = cv2.VideoCapture(0)
 #cap.set(3, 1268)
 #cap.set(4, 720)
 
-"""
-if __name__ == '__main__':
-    db = MySQLdb.connect(
-            host="localhost",
-            port=3306, user='root',
-            passwd='windowsql',
-            db='class_attendance_system'
-    )
-cur = db.cursor()
-"""
 
 while (True):
     success, img = capture.read()
@@ -50,7 +40,9 @@ while (True):
         print("i am in the for loop")
         #matches = face_recognition.compare_faces(encode_list_known, encode_face)
         face_distance = face_recognition.face_distance(encode_list_known, encode_face)
+        print("face_distance: ", face_distance)
         min_index = np.argmin(face_distance)
+        print("min_index: ", min_index)
         """The assumption here is that the index is always id - 1"""
         student_id = ids[min_index]
         print(f"Student with id {student_id} is present")
@@ -59,22 +51,10 @@ while (True):
             )
         EncodeGen.session.add(attendance)
         EncodeGen.session.commit()
-        """
-        insert_stmt1 = (
-                "INSERT INTO attendance (date, time, student_id) "
-                "VALUES (%s, %s, %s)"
-                )
-        data = (datetime.date.today(), datetime.datetime.now().time(), student_id)
-        cur.execute(insert_stmt1, data)
-        db.commit()
-        """
-        #print("matches:", matches)
-        #print("Distances:", face_distance)
     
 
     cv2.imshow("Attendance", img)
     cv2.waitKey(1)
-    break
 """
 cur.close()
 db.close()
