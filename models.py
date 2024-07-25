@@ -3,9 +3,12 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, ForeignKey, Float, Table, create_engine, Date, Time
 from sqlalchemy.orm import relationship
 from flask_login import UserMixin
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
 
-engine =create_engine("mysql+mysqldb://root:windowsql@localhost:3306/class_attendance_system_v2")
+engine =create_engine(os.environ.get('DATABASE_URL'))
 Base = declarative_base()
 
 registered_courses = Table(
@@ -35,9 +38,9 @@ class Student(Base):
     address = Column(String(45), nullable=False)
     phone = Column(Integer, unique=True, nullable=False)
     image_url = Column(String(45), unique=True, nullable=False)
-    
+
     attendance = relationship("Attendance", back_populates="student")
-    
+
     course = relationship(
         "Course", secondary=registered_courses,
         back_populates="student"
@@ -65,7 +68,7 @@ class Attendance(Base):
     id = Column(Integer, primary_key=True)
     date = Column(Date, nullable=False)
     time = Column(Time(timezone=False))
-    
+
     student_id = Column(Integer, ForeignKey('students.id'))
     student = relationship("Student", back_populates="attendance")
 
