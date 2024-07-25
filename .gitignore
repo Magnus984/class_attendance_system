@@ -2,9 +2,8 @@
 /Lib/
 /Scripts/
 .env
-/virtual_environments/face_app_env
-/virtual_environments/web_app_env
-/virtual_environments/face_rec_requirement.txt
+/virtual_environments/
+face_rec_requirement.txt
 __pycache__
 /build/
 /dist/
