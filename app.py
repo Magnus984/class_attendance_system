@@ -13,6 +13,7 @@ import smtplib
 import time
 from dotenv import load_dotenv
 import os
+from datetime import datetime
 
 
 load_dotenv()
@@ -69,7 +70,7 @@ def login():
         lecturer = session.query(Lecturer).filter(Lecturer.email == email).first()
         if lecturer and check_password_hash(lecturer.password, password):
             login_user(lecturer)
-            flash('login successfull', 'success')
+            flash('login successful', 'success')
             return redirect(url_for('dashboard'))
         else:
             flash('Invalid email/password', 'error')
@@ -161,6 +162,21 @@ def dashboard():
     }
     return render_template('dashboard.html', context=context)
 
+def parse_date(date_str):
+    try:
+        parsed_date = datetime.strptime(date_str, "%Y-%m-%d").date()
+        return parsed_date
+    except ValueError:
+        raise ValueError("Invalid date format. Please use YYYY-MM-DD.")
+
+
+def parse_time(time_str):
+    try:
+        parsed_time = datetime.strptime(time_str, "%H:%M:%S").time()
+        return parsed_time
+    except ValueError:
+        raise ValueError("Invalid time format. Please use HH:MM:SS.")
+
 @app.route('/check-attendance', methods=['GET', 'POST'], strict_slashes=False)
 def check_attendance():
     lecturer = current_user
@@ -172,6 +188,31 @@ def check_attendance():
         course_code =request.form['course-code']
         student_id =  request.form['studentID']
 
+
+        #validate date
+        try:
+            valid_date = parse_date(date)
+            print(f"Valid date: {valid_date}")
+        except ValueError as e:
+            flash(str(e), 'error')
+            return redirect(url_for('check_attendance'))
+        
+        #validate start time
+        try:
+            valid_start_time = parse_time(start_time)
+            print(f"Valid time: {valid_start_time}")
+        except ValueError as e:
+            flash(str(e), 'error')
+            return redirect(url_for('check_attendance'))
+
+        #validate end time
+        try:
+            valid_end_time = parse_time(end_time)
+            print(f"Valid time: {valid_end_time}")
+        except ValueError as e:
+            flash(str(e), 'error')
+            return redirect(url_for('check_attendance'))
+        
         # Check if the provided course code is valid and associated with the lecturer
         course = session.query(Course).filter_by(course_code=course_code).first()
 

@@ -34,6 +34,7 @@ class EncodeGen():
         #Get paths from the database
         #Retrieve url from database
         for id, image_url in self.session.query(Student.id, Student.image_url):
+            print(os.path.join(current_dir, image_url))
             self.__img_list.append(cv2.imread(os.path.join(current_dir, image_url)))
             self.__ids.append(id)
 
