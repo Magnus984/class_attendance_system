@@ -1,6 +1,0 @@
-Flask==3.0.3
-Flask-Login==0.6.3
-Flask-Mail==0.10.0
-mysqlclient==2.2.4
-SQLAlchemy==2.0.31
-python-dotenv==1.0.1
