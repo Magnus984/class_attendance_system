@@ -1,0 +1,7 @@
+/include/
+/Lib/
+/Scripts/
+.env
+/virtual_environments/
+__pycache__
+/build/
