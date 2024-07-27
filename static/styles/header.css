@@ -10,7 +10,6 @@
   height: 60px;
   position: fixed;
   z-index: 100;
-
 }
 
 .left-side
@@ -30,7 +29,7 @@
   justify-content: right;
   background: url(../IMAGES/header.jpg) repeat center center/cover;
   flex: 1;
-  padding-right: 40px;
+  padding-right: 15px;
 }
 
 .profile-container
@@ -40,3 +39,97 @@
   justify-content: center;
   align-items: center;
 }
+
+.logout-button
+{
+  background-color: rgb(243, 240, 240);
+  color: #DA9100;
+  border: none;
+  border-radius: 18px;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+  padding-left:10px;
+  padding-right: 10px;
+  padding-top: 9px;
+  padding-bottom: 9px;
+  margin-left: 30px;
+  transition: opacity 0.05s;
+}
+  
+.logout-button:hover
+{
+  border-width: 3px;
+  border-style: solid;
+  border-color: #DA9100;
+  color: black;
+  border-radius: 7px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.logout-button:active
+{
+  opacity: 0.7;
+}
+
+@media (max-width:501px) 
+{ 
+  .header
+  {
+    height: 27px;
+    top: 0px;
+  }
+
+  .profile-img
+  {
+    width: 25px;
+  }
+  
+  .left-side
+  {
+    width: 32px;
+  }
+
+  .lecturer-title
+  {
+    display: none;
+  }
+
+  .right-side
+  {
+    padding-right: 10px;
+  }
+
+  .profile-icon
+  {
+    width: 25px;
+    margin-right: 2px;
+  }
+
+  .logout-button
+  {
+    border-radius: 18px;
+    font-weight: bold;
+    font-size: 12px;
+    padding-left:8px;
+    padding-right: 8px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    margin-left: 30px;
+  }
+
+  .logout-button:hover
+  {
+    border-width: 2px;
+    border-style: solid;
+    border-color: #DA9100;
+    color: black;
+    border-radius: 7px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+  }
+
+}
+
+

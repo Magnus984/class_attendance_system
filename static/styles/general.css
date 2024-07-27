@@ -43,3 +43,49 @@
   background-color: #DAD9D9;
 }
 
+@media (max-width:501px) 
+{ 
+
+  .profile-page-body
+  {
+    margin-top: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-top: 40px;
+    padding-left: 50px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+  }
+
+  .display-results-body
+  {
+    margin-top: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-left: 50px;
+    padding-top: 50px;
+    padding-bottom: 20px;
+    padding-right: 100px;
+  }
+
+  .checkattendance-body
+  {
+    margin-top: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-left: 30px;
+    padding-top: 0px;
+    padding-right: 0px;
+  }
+  
+  .dashboard-body
+  {
+    margin-top: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-left: 40px;
+    padding-top: 40px;
+    padding-right: 15px;
+    padding-bottom: 5px;
+  }     
+}

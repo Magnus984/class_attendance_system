@@ -137,3 +137,28 @@
   flex: 2;
   text-align: center;
 }
+
+
+@media(max-width:501px) 
+{ 
+  .grid-column1, 
+  .grid-column2, 
+  .grid-column3, 
+  .grid-column4
+  {
+    text-align: center;
+    padding-left: 0px;
+    font-size: 15px;
+  }
+
+  .display-results-layer1 img
+  {
+    width: 40px;
+  }
+
+  .display-title
+  {
+    font-size: 20px;
+    font-weight: 700;
+  }
+}

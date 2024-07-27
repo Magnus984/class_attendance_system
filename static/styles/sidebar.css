@@ -64,7 +64,6 @@
   border-top-width: 0.1px;
   border-top-color: rgb(176, 174, 174);
   background-color: #F3F3F3;
-  
 }
 
 .list a 
@@ -144,4 +143,70 @@ li
   padding-top: 20px;
   padding-bottom: 20px;
 
+}
+
+
+@media (max-width:501px) 
+{ 
+
+  .profile-page-sidebar
+  {
+    width: 31px;
+    top: 27px;
+  }
+
+  .display-results-sidebar
+  {
+    width: 31px;
+    top: 27px;
+  }
+
+  .checkattendance-sidebar
+  {
+    width: 31px;
+    top: 27px;
+  }
+
+  .sidebar
+  {
+    width: 31px;
+    top: 27px;
+  } 
+  
+  .anchor-text
+  {
+    display: none;
+  }
+
+  .nav-edit
+  {
+    display: none;
+  }
+
+  .list a
+  {
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    justify-content: center;
+    column-gap: 0px;
+    padding: 5px;
+
+  } 
+
+  .nav-header
+  {
+    display: none;
+  }
+
+  .unordered-list
+  {
+    margin-top: 10px;
+  }
+
+  .link.non-active:hover
+  {
+    background-color: transparent;
+  }
+  
 }

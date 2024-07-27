@@ -12,15 +12,20 @@
 </head>
 
 <body class="profile-page-body">
-<header class="header">
-  <div class="left-side"> LECTURER PORTAL</div>
-  <div class="right-side"> 
-    <div class="profile-container">
-      <img src="../static/ICONS/profile1.png" alt="profile icon">
-      <div style="color: white;"> {{ first_name }} {{ last_name }} </div>
+  <header class="header">
+    <div class="left-side">
+      <div class="lecturer-title">
+        LECTURER PORTAL
+      </div>
     </div>
-  </div>
-</header>
+    <div class="right-side"> 
+      <a class="profile-container" href="{{ url_for('profile') }}" style="text-decoration: none;">
+        <img class="profile-icon" src="../static/ICONS/profile1.png" alt="profile icon">
+        <div style="color: white;"> {{ first_name }} {{ last_name }} </div>
+      </a>
+      <a href="{{ url_for('logout') }}" class="logout-button" style="text-decoration: none;">Logout</a>
+    </div>
+  </header>
 
 <nav class="profile-page-sidebar">
   <div class="nav-header">

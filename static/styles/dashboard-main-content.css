@@ -30,7 +30,6 @@
   padding-top: 10px;
   padding-bottom: 10px;
   column-gap: 80px;
-  
 }
 
 .big-image
@@ -150,4 +149,94 @@
 {
   font-weight: 300;
   line-height: 19px;
+}
+
+@media (max-width:501px) 
+{ 
+  .layer1,.layer2
+  {
+    flex: 1;  
+  }
+
+  .layer1
+  {
+    padding: 0px;
+    padding-bottom: 30px;
+    border-width: 1px;
+    position: relative;
+  }
+
+  .big-image
+  {
+    height: 300px;
+  }
+
+  .surface-text
+  {
+    width: 250px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 8;
+  }
+
+  .layer2
+  {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 10px;
+    padding-bottom: 50px;
+    column-gap: 15px; 
+  }
+
+  .desc
+  {
+    font-weight: 300;
+    line-height: 15px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+  }
+
+  .guide-icon-img
+  {
+    width: 35px;
+    height: 35px;
+  }
+
+  .check-attendance-img
+  {
+    
+    width: 30px;
+    height: 30px;
+  }
+
+  .virtual-classroom-img
+  {
+  
+    width: 30px;
+    height: 32px;
+  }
+
+  .layer2 a
+  {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    row-gap: 5px;
+    background-color: #F0F0F0;
+    text-decoration: none;
+    color: black;
+    border-radius: 7px;
+    font-size: 12px;
+    padding-top: 7px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
 }

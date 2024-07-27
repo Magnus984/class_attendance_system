@@ -13,12 +13,18 @@
 
 <body class="dashboard-body">
 <header class="header">
-  <div class="left-side"> LECTURER PORTAL</div>
+  <div class="left-side">
+    <div class="lecturer-title">
+      LECTURER PORTAL
+    </div>
+  </div>
   <div class="right-side"> 
     <a class="profile-container" href="{{ url_for('profile') }}" style="text-decoration: none;">
-      <img src="../static/ICONS/profile1.png" alt="profile icon">
+      <img class="profile-icon" src="../static/ICONS/profile1.png" alt="profile icon">
       <div style="color: white;"> {{ context.first_name }} {{ context.last_name }} </div>
     </a>
+    <!--<button class="logout-button">Logout</button>-->
+    <a href="{{ url_for('logout') }}" class="logout-button" style="text-decoration: none;">Logout</a>
   </div>
 </header>
 

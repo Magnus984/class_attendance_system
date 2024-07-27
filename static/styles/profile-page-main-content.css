@@ -3,8 +3,7 @@
 {
   display: flex;
   flex-direction: column;
-  row-gap: 40px;
-  
+  row-gap: 40px; 
   width: 100%;
 }
 
@@ -100,7 +99,6 @@
   padding-bottom: 20px;
 }
 
-
 .profile-layer2-input-container
 {
   flex: 1;
@@ -181,6 +179,51 @@
 .main-menu-btn img
 {
   width: 15px;
+}
+
+@media (max-width:501px) 
+{ 
+  .profile-content
+  {
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px; 
+    width: 100%;
+  }
+  .profile-layer1
+  { 
+    padding-top: 10px;
+    padding-bottom: 15px;
+    row-gap: 15px;
+    height: 150px;
+  }
+
+  .title-profile
+  {
+    font-size: 20px;
+  }
+
+  .profile-layer1-icon img
+  {
+    width: 50px;
+  }
+
+  .profile-layer2
+  {
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    background-color: #FFFFFF;
+    padding-top: 5px;
+    padding-bottom: 0px;
+    border-radius: 2px;
+  }
+
+  .btn-container
+  {
+    margin-top: 15px;
+  }
+
 }
 
 
