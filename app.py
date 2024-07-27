@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
-from flask_login import LoginManager, current_user, login_user, login_required
+from flask_login import LoginManager, current_user, login_user, login_required, login_required, logout_user
 from flask_mail import Mail, Message
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy import create_engine, and_, select, update, func
@@ -13,6 +13,8 @@ import time
 from dotenv import load_dotenv
 import os
 from datetime import datetime
+from itsdangerous import URLSafeTimedSerializer
+
 
 load_dotenv()
 app = Flask(__name__)
@@ -31,6 +33,7 @@ Session = sessionmaker(bind=engine)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
+login_manager.login_view = 'login'
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -48,8 +51,21 @@ def valid_email(email):
 def valid_phone(number):
     return len(number) == 10
 
-def generate_token():
-    return secrets.token_urlsafe(16)
+def generate_token(email):
+    #return secrets.token_urlsafe(16)
+    serializer = URLSafeTimedSerializer(app.secret_key)
+    return serializer.dumps(email, salt='password-reset-salt')
+
+
+def confirm_token(token, expiration=120):
+    serializer = URLSafeTimedSerializer(app.secret_key)
+    try:
+        email = serializer.loads(token, salt='password-reset-salt', max_age=expiration)
+    except Exception as e:
+        print(f"Token confirmation error: {e}")
+        return False
+    return email
+
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -79,6 +95,16 @@ def login():
             session.close()  # Close the session
     return render_template('login.html')
 
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    flash('You have been logged out.', 'success')
+    return redirect(url_for('login'))
+
+
+
 @app.route('/forgot-password', methods=['GET', 'POST'], strict_slashes=False)
 def forgot_password():
     if request.method == 'POST':
@@ -92,12 +118,15 @@ def forgot_password():
             if not lecturer:
                 flash('Make sure email has been registered', 'info')
                 return redirect(url_for('forgot_password'))
-
+            """
             token = generate_token()
             uid = lecturer.id
             reset_url = "{}://{}/change-password/{}/{}/".format(
                 request.scheme, request.host, uid, token
             )
+            """
+            token = generate_token(lecturer.email)
+            reset_url = url_for('change_password', token=token, _external=True)
             msg = Message(
                 'Password Reset Request',
                 sender='CAS admin tettehmagnus35@gmail.com',
@@ -124,29 +153,43 @@ def forgot_password():
         return redirect(url_for('login'))
     return render_template('forgot_password.html')
 
-@app.route('/change-password/<int:uid>/<token>/', methods=['GET', 'POST'], strict_slashes=False)
-def change_password(uid, token):
+#@app.route('/change-password/<int:uid>/<token>/', methods=['GET', 'POST'], strict_slashes=False)
+@app.route('/change-password/<token>/', methods=['GET', 'POST'], strict_slashes=False)
+def change_password(token):
+    try:
+        email = confirm_token(token, expiration=120)
+        if not email:
+            flash('The reset link is invalid or has expired.', 'error')
+            return redirect(url_for('forgot_password'))
+    except:
+        flash('The reset link is invalid or has expired.', 'error')
+        return redirect(url_for('forgot_password'))
+    
     if request.method == 'POST':
         new_password = request.form['NewPassword']
         confirm_password = request.form['ConfirmPassword']
 
         if new_password != confirm_password:
             flash('Passwords do not match', 'error')
-            return redirect(url_for('change_password', uid=uid, token=token))
+            #return redirect(url_for('change_password', uid=uid, token=token))
+            return redirect(url_for('change_password', token=token))
         if len(new_password) < 8:
             flash('Passwords should be at least 8 characters long', 'error')
-            return redirect(url_for('change_password', uid=uid, token=token))
+            #return redirect(url_for('change_password', uid=uid, token=token))
+            return redirect(url_for('change_password', token=token))
 
         session = Session()  # Create a new session
         try:
-            lecturer = session.query(Lecturer).filter_by(id=uid).first()
+            #lecturer = session.query(Lecturer).filter_by(id=uid).first()
+            lecturer = session.query(Lecturer).filter_by(email=email).first()
             if not lecturer:
                 flash('Invalid user', 'error')
                 return redirect(url_for('forgot_password'))
 
             if check_password_hash(lecturer.password, new_password):
                 flash('New password should not be similar to the old one', 'error')
-                return redirect(url_for('change_password', uid=uid, token=token))
+                #return redirect(url_for('change_password', uid=uid, token=token))
+                return redirect(url_for('change_password', token=token))
 
             lecturer.password = generate_password_hash(new_password)
             session.commit()
@@ -184,6 +227,7 @@ def parse_time(time_str):
         raise ValueError("Invalid time format. Please use HH:MM:SS.")
 
 @app.route('/check-attendance', methods=['GET', 'POST'], strict_slashes=False)
+@login_required
 def check_attendance():
     lecturer = current_user
     first_name, last_name = lecturer.first_name, lecturer.last_name
@@ -301,6 +345,7 @@ def check_attendance():
     )
 
 @app.route('/profile', methods=['GET', 'POST'], strict_slashes=False)
+@login_required
 def profile():
     lecturer = current_user
     first_name, last_name, lecturer_id, lecturer_email, lecturer_address, lecturer_phone = \
