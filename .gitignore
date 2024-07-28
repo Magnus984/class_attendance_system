@@ -7,7 +7,6 @@ face_rec_requirement.txt
 __pycache__
 /build/
 /dist/
-*.spec
 *.cfg
 *.p
 icon.ico

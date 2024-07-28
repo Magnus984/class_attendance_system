@@ -1,4 +1,5 @@
 import cv2
+import cvzone
 import face_recognition
 import os
 import pickle
@@ -13,8 +14,9 @@ import numpy as np
 import datetime
 
 
-load_dotenv()
+#load_dotenv()
 
+"""
 if getattr(sys, 'frozen', False):
     # If frozen, use the directory containing the executable
     current_dir = os.path.dirname(sys.executable)
@@ -24,6 +26,7 @@ else:
 
 # Path to the Images directory
 images_dir = os.path.join(current_dir, 'Images')
+
 
 image_files = [
     "Bill_Gates_photo.jpg",
@@ -40,15 +43,16 @@ for image_file in image_files:
     else:
         print(f"Successfully loaded image: {image_path}")
 
-
-engine = create_engine(os.environ.get('DATABASE_URL'))
+"""
+#engine = create_engine(os.environ.get('DATABASE_URL'))
+engine = create_engine('mysql+mysqldb://root:windowsql@localhost:3306/class_attendance_system_v2')
 Session = sessionmaker(bind=engine)
 session = Session()
 
 img_list = []
 ids = []
 
-#current_dir = os.path.dirname(os.path.abspath(__file__))
+current_dir = os.path.dirname(os.path.abspath(__file__))
 print(f"current_dir: {current_dir}")
 #Get paths from the database
 for id, image_url in session.query(Student.id, Student.image_url):
@@ -61,6 +65,7 @@ for id, image_url in session.query(Student.id, Student.image_url):
     else:
         print(f"Failed to load image from database: {image_path}")
 
+"""
 #Encodes images
 print("Encoding Begins...")
 encode_list = []
@@ -82,7 +87,7 @@ with open("EncodeFile.p", mode='wb') as file:
     pickle.dump(encode_list_known_ids, file)
     print("File Saved")
 
-
+"""
 
 # loads encoding file
 print("Loading encoded file...")
@@ -117,6 +122,10 @@ while ((datetime.datetime.now() - initial_time) < datetime.timedelta(seconds=20)
         """The assumption here is that the index is always id - 1"""
         student_id = ids[min_index]
         print(f"Student with id {student_id} is present")
+        y1, x2, y2, x1 = face_loc
+        y1, x2, y2, x1 = y1 * 4, x2 * 4, y2 * 4, x1 * 4
+        bbox = x1, y1, x2 - x1, y2 - y1
+        cvzone.cornerRect(img, bbox)
         attendance = Attendance(
             date=datetime.date.today(), time=datetime.datetime.now(), student_id=student_id
             )
