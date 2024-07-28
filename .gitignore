@@ -3,10 +3,8 @@
 /Scripts/
 .env
 /virtual_environments/
-face_rec_requirement.txt
 __pycache__
 /build/
 /dist/
 *.cfg
 *.p
-icon.ico
