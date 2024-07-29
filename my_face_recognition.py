@@ -119,18 +119,25 @@ while ((datetime.datetime.now() - initial_time) < datetime.timedelta(seconds=20)
         print("face_distance: ", face_distance)
         min_index = np.argmin(face_distance)
         print("min_index: ", min_index)
-        """The assumption here is that the index is always id - 1"""
-        student_id = ids[min_index]
-        print(f"Student with id {student_id} is present")
-        y1, x2, y2, x1 = face_loc
-        y1, x2, y2, x1 = y1 * 4, x2 * 4, y2 * 4, x1 * 4
-        bbox = x1, y1, x2 - x1, y2 - y1
-        cvzone.cornerRect(img, bbox)
-        attendance = Attendance(
-            date=datetime.date.today(), time=datetime.datetime.now(), student_id=student_id
-            )
-        session.add(attendance)
-        session.commit()
+
+        if face_distance[min_index] < 0.47:  
+            """The assumption here is that the index is always id - 1"""
+            student_id = ids[min_index]
+            print(f"Student with id {student_id} is present")
+
+            y1, x2, y2, x1 = face_loc
+            y1, x2, y2, x1 = y1 * 4, x2 * 4, y2 * 4, x1 * 4
+            bbox = x1, y1, x2 - x1, y2 - y1
+            cvzone.cornerRect(img, bbox)
+            
+            #update database
+            attendance = Attendance(
+                date=datetime.date.today(), time=datetime.datetime.now(), student_id=student_id
+                )
+            session.add(attendance)
+            session.commit()
+        else:
+            print("Face distance too high, not updating the database")
     
 
     cv2.imshow("Attendance", img)
