@@ -7,7 +7,9 @@ The Ageitgey face_recognition module was utilized here
 - [Project Overview](project-overview)
 - [Features](features)
 - [Tech Stack](tech-stack)
+- [Usage](usage)
 - [System Architecure](system-architecture)
+- [ERD](erd)
 
 ## Background
 To wrap up my four-year BSc. Computer Engineering degree at the Kwame Nkrumah University of Science and Technology, I worked on this project together with my two partners. Attendance taking is manual in most Ghanaian Universities and this somehow has a negative effect on the learning process in these universities. This project seeks to automate the process to eliminate if not all, but some inconsistencies causing this negative effect.
@@ -41,6 +43,9 @@ Secondly, there is a web application for accessing attendance records. This appl
   - Nginx as the proxy server
   - Gunicorn as the application server
   - Deployed on an azure virtual machine instance
+
+## Usage
+This project requires specific environment and path variables to be configured for proper usage. These variables are currently under review and will be finalized soon. Please check back for detailed usage instructions.
 
 ## System Archtiecture
 ![System Architecture](/architecture.png)
