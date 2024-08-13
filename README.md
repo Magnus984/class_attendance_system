@@ -3,13 +3,13 @@ An automatic class attendance system that uses artificial intelligence to recogn
 The Ageitgey face_recognition module was utilized here
 
 ## Table of Contents
-- [Background](background)
-- [Project Overview](project-overview)
-- [Features](features)
-- [Tech Stack](tech-stack)
-- [Usage](usage)
-- [System Architecure](system-architecture)
-- [ERD](erd)
+- [Background](#background)
+- [Project Overview](#project-overview)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Usage](#usage)
+- [System Architecure](#system-architecture)
+- [ERD](#erd)
 
 ## Background
 To wrap up my four-year BSc. Computer Engineering degree at the Kwame Nkrumah University of Science and Technology, I worked on this project together with my two partners. Attendance taking is manual in most Ghanaian Universities and this somehow has a negative effect on the learning process in these universities. This project seeks to automate the process to eliminate if not all, but some inconsistencies causing this negative effect.
